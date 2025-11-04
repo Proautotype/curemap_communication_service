@@ -40,15 +40,15 @@ public class PostController {
     @Operation(
             summary = "Creates a new POST",
             description = "API to create a new POST",
-            responses = {
-                    @ApiResponse(
-                            responseCode = "201",
-                            description = "Post Created"
-                    ),
-                    @ApiResponse(
-                            responseCode = "500",
-                            description = "Internal server error"
-                    )
+                responses = {
+                        @ApiResponse(
+                                responseCode = "201",
+                                description = "Post Created"
+                        ),
+                        @ApiResponse(
+                                responseCode = "500",
+                                description = "Internal server error"
+                        )
             }
     )
     public ResponseEntity<SuccessApiResponse<Post>> createPost(@RequestBody CreatePostCommand command) {
@@ -61,6 +61,24 @@ public class PostController {
     }
 
     @GetMapping("/posterData/{posterId}")
+    @Operation(
+            summary = "Get user details of the poster",
+            description = "API to get user details of the poster",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "User details retrieved successfully"
+                    ),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "User not found"
+                    ),
+                    @ApiResponse(
+                            responseCode = "500",
+                            description = "Internal server error"
+                    )
+            }
+    )
     public ResponseEntity<SuccessApiResponse<UserDto>> getPosterDetails(@PathVariable("posterId") String posterId) {
         ResponseEntity<SuccessApiResponse<UserDto>> accountDetails = accountsFeignClient.getAccountDetails(posterId);
 
@@ -114,7 +132,7 @@ public class PostController {
     public ResponseEntity<SuccessApiResponse<String>> likePost(@PathVariable("postId") String postId) {
         SuccessApiResponse<String> commentSuccessApiResponse = new SuccessApiResponse<>();
         commentSuccessApiResponse.setData("");
-        commentSuccessApiResponse.setMessage("Post retrieved");
+        commentSuccessApiResponse.setMessage("post like");
         return ResponseEntity.status(HttpStatus.OK).body(commentSuccessApiResponse);
     }
 
@@ -131,7 +149,7 @@ public class PostController {
     public ResponseEntity<SuccessApiResponse<String>> dislikePost(@PathVariable("postId") String postId) {
         SuccessApiResponse<String> commentSuccessApiResponse = new SuccessApiResponse<>();
         commentSuccessApiResponse.setData("");
-        commentSuccessApiResponse.setMessage("Post retrieved");
+        commentSuccessApiResponse.setMessage("Post disliked");
         return ResponseEntity.status(HttpStatus.OK).body(commentSuccessApiResponse);
     }
 
@@ -148,7 +166,7 @@ public class PostController {
     public ResponseEntity<SuccessApiResponse<String>> flagPost(@PathVariable("postId") String postId) {
         SuccessApiResponse<String> commentSuccessApiResponse = new SuccessApiResponse<>();
         commentSuccessApiResponse.setData("");
-        commentSuccessApiResponse.setMessage("Post retrieved");
+        commentSuccessApiResponse.setMessage("Post flagged");
         return ResponseEntity.status(HttpStatus.OK).body(commentSuccessApiResponse);
     }
 
@@ -165,7 +183,7 @@ public class PostController {
     public ResponseEntity<SuccessApiResponse<String>> view(@PathVariable("postId") String postId) {
         SuccessApiResponse<String> commentSuccessApiResponse = new SuccessApiResponse<>();
         commentSuccessApiResponse.setData("");
-        commentSuccessApiResponse.setMessage("Post retrieved");
+        commentSuccessApiResponse.setMessage("Post viewed");
         return ResponseEntity.status(HttpStatus.OK).body(commentSuccessApiResponse);
     }
 
