@@ -11,10 +11,9 @@ import org.springframework.stereotype.Component;
 public class InfraPostModelMapper {
 
     private final InfraCommentModelMapper commentModelMapper;
-
-
     public PostEntity toEntity(Post post) {
         PostEntity postEntity = new PostEntity();
+        postEntity.setTitle(post.getTitle());
         postEntity.setContent(post.getContent());
         postEntity.setMediaUrls(post.getMediaUrls());
         postEntity.setPosterId(post.getPosterId());
@@ -22,9 +21,11 @@ public class InfraPostModelMapper {
     }
 
     @Transactional
-    public Post toModel(PostEntity postEntity){
+    public Post toModel(PostEntity postEntity) {
         return Post.builder()
+                .id(postEntity.getId())
                 .posterId(postEntity.getPosterId())
+                .title(postEntity.getTitle())
                 .content(postEntity.getContent())
                 .mediaUrls(postEntity.getMediaUrls())
                 .likes(postEntity.getLikes())

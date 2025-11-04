@@ -1,0 +1,41 @@
+name: CI/CD with Jib and Render
+
+on:
+  pull_request:
+    branches:
+      - "main"
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout your repository
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Set up JDK 21
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+      # Cache Maven dependencies
+      - name: Cache Maven packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+
+      # Build JAR & container with Jib
+      - name: Build JAR & container with Jib
+        run: mvn clean compile jib:build -Dimage=registry.render.com/${{ secrets.RENDER_SERVICE_NAME }}
+
+      # Trigger Render deployment
+      - name: Deply to Render
+        run: |
+          curl -X POST \
+          - H "Accept: application/json" \
+          - H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
+          https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID }}/deploys

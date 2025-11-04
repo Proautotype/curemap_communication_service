@@ -1,9 +1,9 @@
 spring:
   application:
-    name: "curemap-communication-service"
+    name: COMMUNICATIONS
 
   datasource:
-    url: jdbc:postgresql://localhost/cc_service_db
+    url: jdbc:postgresql://localhost:5432/cc_service_db
     driver-class-name: "org.postgresql.Driver"
     username: admin
     password: admin
@@ -39,8 +39,29 @@ spring:
         max-idle: 8
         min-idle: 0
 
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    fetchRegistry: true
+    registerWithEureka: true
+    serviceUrl:
+      defaultZone: http://localhost:8070/eureka/
+
+info:
+  app:
+    name: COMMUNICATIONS-SERVICE
+    description: "CureMap Communication Service Application"
+    version: "1.0.0"
+
 management:
   endpoints:
     web:
       exposure:
         include: "*"
+  info:
+    env:
+      enabled: true
+  endpoint:
+    shutdown:
+      enabled: true

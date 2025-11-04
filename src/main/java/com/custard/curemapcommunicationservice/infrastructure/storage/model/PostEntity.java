@@ -10,7 +10,9 @@ import java.time.Instant;
 import java.util.List;
 
 @Entity
-@Table(name = "posts")
+@Table(name = "posts", indexes = {
+        @Index(name = "idx_postentity_id", columnList = "id")
+})
 @Setter
 @Getter
 public class PostEntity {
@@ -18,10 +20,12 @@ public class PostEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
     private String posterId;
+    @Column()
+    private String title;
+    @Column(columnDefinition = "TEXT")
     private String content;
     private boolean isDeleted = false;
     private List<String> mediaUrls;
-
     @OneToMany(mappedBy = "postEntity", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<CommentEntity> comments;
 
@@ -45,5 +49,21 @@ public class PostEntity {
         commentEntity.setPostEntity(null);
     }
 
-
+    @Override
+    public String toString() {
+        return "PostEntity{" +
+                "id='" + id + '\'' +
+                ", posterId='" + posterId + '\'' +
+                ", content='" + content + '\'' +
+                ", isDeleted=" + isDeleted +
+                ", mediaUrls=" + mediaUrls +
+                ", comments=" + comments +
+                ", likes=" + likes +
+                ", dislikes=" + dislikes +
+                ", flaggedCount=" + flaggedCount +
+                ", views=" + views +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                '}';
+    }
 }

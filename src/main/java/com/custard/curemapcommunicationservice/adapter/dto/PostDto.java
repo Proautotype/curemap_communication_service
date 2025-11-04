@@ -1,8 +1,10 @@
-package com.custard.curemapcommunicationservice.domain.model;
+package com.custard.curemapcommunicationservice.adapter.dto;
 
+import com.custard.curemapcommunicationservice.domain.model.Comment;
 import lombok.*;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -10,7 +12,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Post {
+public class PostDto {
     private String id;
     private String posterId;
     private List<String> mediaUrls;
@@ -18,11 +20,16 @@ public class Post {
     private String content;
     private Instant timestamp;
     private boolean isDeleted;
-    private List<Comment> comments;
+    @Builder.Default
+    private List<SimpleCommentDto> comments = new ArrayList<>();
 
+    @Builder.Default
     private int likes = 0;
+    @Builder.Default
     private int dislikes = 0;
+    @Builder.Default
     private int flaggedCount = 0;
+    @Builder.Default
     private int views = 0;
 
     @Override
