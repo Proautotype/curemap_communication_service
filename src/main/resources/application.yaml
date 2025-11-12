@@ -1,6 +1,6 @@
 spring:
   application:
-    name: COMMUNICATIONS
+    name: communications
 
   datasource:
     url: jdbc:postgresql://localhost:5432/cc_service_db
@@ -42,6 +42,7 @@ spring:
 eureka:
   instance:
     preferIpAddress: true
+    appName: communications
   client:
     fetchRegistry: true
     registerWithEureka: true
@@ -50,7 +51,7 @@ eureka:
 
 info:
   app:
-    name: COMMUNICATIONS-SERVICE
+    name: communications
     description: "CureMap Communication Service Application"
     version: "1.0.0"
 
@@ -65,3 +66,10 @@ management:
   endpoint:
     shutdown:
       enabled: true
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
