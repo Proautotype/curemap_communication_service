@@ -1,9 +1,12 @@
+server:
+  port: 8082
+
 spring:
   application:
     name: communications
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/cc_service_db
+    url: jdbc:postgresql://localhost:5433/postgres
     driver-class-name: "org.postgresql.Driver"
     username: admin
     password: admin
